@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-serene-pink: #fce4ec;
+    --color-serene-blue: #e3f2fd;
+    --color-serene-green: #e8f5e9;
+    --color-serene-dark: #374151;
+    --color-serene-accent: #fbc1c1;
+  }
+
+  body {
+    @apply antialiased text-serene-dark bg-slate-50;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl;
+  }
+
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-lg border border-white/50 rounded-[2.5rem] p-8 shadow-sm hover:shadow-xl hover:bg-white/60 transition-all duration-500;
+  }
+
+  .btn-serene {
+    @apply px-8 py-4 rounded-3xl font-bold transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95;
+  }
+
+  .btn-serene-primary {
+    @apply btn-serene bg-indigo-600 text-white shadow-lg shadow-indigo-200 hover:bg-indigo-500;
+  }
+
+  .btn-serene-secondary {
+    @apply btn-serene bg-white/60 backdrop-blur-md border border-white/50 text-indigo-700 shadow-sm hover:bg-white;
+  }
+}
+
+/* Custom scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+}
