@@ -14,7 +14,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-slate-100 px-8 py-5 flex flex-wrap items-center justify-between transition-all duration-300">
       <Link to="/" className="group flex items-center gap-3">
         <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200 group-hover:scale-110 transition-transform">
-           <span className="text-xl">🌿</span>
+          <span className="text-xl">🌿</span>
         </div>
         <span className="font-['Playfair_Display'] font-black text-2xl tracking-tighter text-slate-900 leading-none">
           MindSpace
@@ -61,13 +61,13 @@ export default function Navbar() {
                   Home
                 </Link>
                 <Link to="/schedule" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Schedule
+                  My Schedule
                 </Link>
                 <Link to="/connect" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
                   Manage Access
                 </Link>
                 <Link to="/manage-resources" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Content Hub
+                  Resource Library
                 </Link>
               </>
             )}

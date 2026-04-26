@@ -146,7 +146,7 @@ export default function Resources() {
   return (
     <div className="min-h-screen bg-[#fcfdfe] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-8">
           <div>
@@ -157,10 +157,10 @@ export default function Resources() {
             </h1>
           </div>
           <div className="flex items-center gap-4 bg-white/50 border border-slate-100 px-6 py-4 rounded-[1.5rem] shadow-sm">
-             <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xs">
-                {resources.length}
-             </div>
-             <p className="font-black uppercase tracking-widest text-[10px] text-slate-400 leading-none">Units Available</p>
+            <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xs">
+              {resources.length}
+            </div>
+            <p className="font-black uppercase tracking-widest text-[10px] text-slate-400 leading-none">Units Available</p>
           </div>
         </div>
 
@@ -169,7 +169,7 @@ export default function Resources() {
           <div className="mb-12 p-8 lg:p-12 glass-panel !rounded-[4rem] !border-none bg-white relative overflow-hidden group shadow-2xl">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-100 opacity-20 rounded-full blur-3xl -mr-32 -mt-32" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-100 opacity-20 rounded-full blur-3xl -ml-32 -mb-32" />
-            
+
             <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
               <div className="w-20 h-20 rounded-[2rem] bg-indigo-600 flex items-center justify-center text-3xl shadow-2xl shadow-indigo-100 shrink-0 transform group-hover:rotate-12 transition-transform duration-500">
                 <span className="text-white">✨</span>
@@ -199,7 +199,7 @@ export default function Resources() {
           <div className="flex flex-col xl:flex-row gap-8 mb-10">
             <div className="relative flex-1 group">
               <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-slate-300">
-                 🔍
+                🔍
               </div>
               <input
                 type="text"
@@ -233,8 +233,8 @@ export default function Resources() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-sm border-2 ${activeCategory === cat
-                    ? 'bg-indigo-600 border-indigo-600 text-white shadow-xl shadow-indigo-100 -translate-y-1'
-                    : 'bg-white border-slate-50 text-slate-400 hover:border-indigo-100 hover:text-indigo-600'
+                  ? 'bg-indigo-600 border-indigo-600 text-white shadow-xl shadow-indigo-100 -translate-y-1'
+                  : 'bg-white border-slate-50 text-slate-400 hover:border-indigo-100 hover:text-indigo-600'
                   }`}
               >
                 {cat}
@@ -254,11 +254,11 @@ export default function Resources() {
         {/* Market Grid */}
         <div className="space-y-16">
           {loading ? (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="h-[450px] bg-slate-50 rounded-[3rem] animate-pulse"></div>
-                ))}
-             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} className="h-[450px] bg-slate-50 rounded-[3rem] animate-pulse"></div>
+              ))}
+            </div>
           ) : mainResources.length === 0 ? (
             <div className="glass-panel !rounded-[4rem] p-32 text-center border-none shadow-sm">
               <div className="w-24 h-24 rounded-full bg-slate-50 flex items-center justify-center mx-auto mb-8 text-5xl italic font-serif text-slate-200">
@@ -266,7 +266,7 @@ export default function Resources() {
               </div>
               <h3 className="text-3xl font-black text-slate-900 tracking-tight">Library is quiet</h3>
               <p className="text-slate-400 mt-4 max-w-sm mx-auto font-medium leading-relaxed italic">
-                 Your search criteria did not match any available <br /> clinical knowledge units.
+                Your search criteria did not match any available <br /> clinical knowledge units.
               </p>
               <button
                 onClick={() => { setActiveCategory('All'); setTypeFilter('all'); setSearch(''); }}
@@ -285,8 +285,8 @@ export default function Resources() {
           {crisisResources.length > 0 && (
             <div className="pt-24 border-t border-slate-100">
               <div className="flex items-center gap-4 mb-12">
-                 <h2 className="text-sm font-black uppercase tracking-[0.4em] text-rose-500">Critical Support Units</h2>
-                 <div className="flex-1 h-px bg-rose-100" />
+                <h2 className="text-sm font-black uppercase tracking-[0.4em] text-rose-500">Critical Support Units</h2>
+                <div className="flex-1 h-px bg-rose-100" />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                 {crisisResources.map(r => <ResourceCard key={r._id} resource={r} />)}
@@ -299,8 +299,8 @@ export default function Resources() {
             <div className="glass-panel !rounded-[4rem] p-12 lg:p-20 shadow-2xl relative overflow-hidden bg-white border-none mt-32">
               <div className="absolute top-0 right-0 w-96 h-96 bg-rose-50 rounded-full blur-3xl -mr-48 -mt-48 opacity-60" />
               <div>
-                 <h2 className="text-5xl font-black text-slate-900 tracking-tighter mb-4 leading-none text-center lg:text-left">Immediate <br /><span className="text-rose-600">Lifelines.</span></h2>
-                 <p className="text-slate-400 font-medium mb-16 text-center lg:text-left max-w-sm leading-relaxed uppercase tracking-[0.1em] text-[10px] font-black">Professional human interaction is available 24/7 through these verified network nodes.</p>
+                <h2 className="text-5xl font-black text-slate-900 tracking-tighter mb-4 leading-none text-center lg:text-left">Immediate <br /><span className="text-rose-600">Lifelines.</span></h2>
+                <p className="text-slate-400 font-medium mb-16 text-center lg:text-left max-w-sm leading-relaxed uppercase tracking-[0.1em] text-[10px] font-black">Professional human interaction is available 24/7 through these verified network nodes.</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
                 {CRISIS_LINES.map(line => (
@@ -321,7 +321,7 @@ export default function Resources() {
         </div>
 
         <p className="text-center mt-32 text-[10px] font-black uppercase tracking-[0.4em] text-slate-200">
-           Digital Clinical Archive • MindSpace Hub
+          Digital Clinical Archive • MindSpace Hub
         </p>
       </div>
     </div>
