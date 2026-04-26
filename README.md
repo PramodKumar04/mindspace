@@ -14,7 +14,7 @@ Featuring a modern **Tailwind frosted-glass (glassmorphism)** aesthetic, the pla
 - **Authentication**: Secure bcrypt-backed password authentication with server-side session tokens
 - **Smart Resource Hub**: AI-driven media recommendations dynamically sorted based on the user's latest check-in severities (powered by OpenAI). Features interactive, animated Breathing and Grounding exercise widgets. Counselors and Admins share a dedicated, grid-based Resource Management Hub.
 - **Community Forum**: Anonymous posting, nested comment threads (up to depth 3) with `@mentions`, and moderation.
-- **AI Chatbot**: **Gemini-powered** mental health support utilizing structured JSON responses, real-time risk detection, session intensity tracking, and interactive therapeutic widgets rendered directly in the chat.
+- **AI Chatbot**: **Groq-powered (Llama 3.3)** mental health support utilizing structured JSON responses, real-time risk detection, session intensity tracking, and interactive therapeutic widgets rendered directly in the chat.
 - **Counseling Booking**: Schedule and manage counseling sessions
 - **Actionable Admin Dashboard**: Native tools to "Force Delete" flagged posts, dismiss false reports, and mark high-risk AI chat sessions as "Resolved" after intervention.
 - **Stability & Polish**: React Error Boundaries, Disclaimer Consent Modals, Mobile-responsive UI, and robust `prefers-reduced-motion` accessibility support.
@@ -35,8 +35,7 @@ Featuring a modern **Tailwind frosted-glass (glassmorphism)** aesthetic, the pla
 - Node.js (v16 or higher)
 - MongoDB (v5 or higher)
 - npm or yarn
-- **Gemini API key** (Optional but recommended - platform falls back to mock JSON responses if not provided)
-- **OpenAI API key** (Optional - strictly used for dynamic resource tips)
+- **Groq API key** (Optional but recommended - platform falls back to mock JSON responses if not provided)
 
 ## 🛠️ Installation
 
@@ -62,9 +61,7 @@ cp .env.example .env
 PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/mental-health-platform
-GEMINI_API_KEY=your-gemini-api-key-here
-GEMINI_MODEL=gemini-2.0-flash
-OPENAI_API_KEY=your-openai-api-key-here
+GROQ_API_KEY=your-groq-api-key-here
 FRONTEND_URL=http://localhost:5173
 ```
 
@@ -104,8 +101,7 @@ cd frontend
 
 2. Install dependencies (Note: `--legacy-peer-deps` is required to safely bypass Vite/React strict versioning for the charting libraries):
 ```bash
-npm install
-npm install recharts react-is --legacy-peer-deps
+npm install --legacy-peer-deps
 ```
 
 3. Create a `.env` file in the frontend directory:
@@ -181,13 +177,15 @@ mental-health-platform/
 │   │   ├── admin.js
 │   │   ├── assessments.js
 │   │   ├── auth.js
-│   │   ├── bookings.js
+│   │   ├── connect.js
 │   │   ├── chat.js
 │   │   ├── colleges.js
+│   │   ├── notification.js
 │   │   ├── posts.js
-│   │   └── resources.js
+│   │   ├── resources.js
+│   │   └── video.js
 │   ├── services/
-│   │   ├── aiService.js (Gemini JSON integration & OpenAI fallback)
+│   │   ├── aiService.js (Groq Llama-3 integration)
 │   │   └── riskDetection.js
 │   ├── .env.example
 │   ├── package.json
@@ -210,17 +208,23 @@ mental-health-platform/
 │   │   │   └── onboardingFlow.js
 │   │   ├── pages/
 │   │   │   ├── AdminPanel.jsx
-│   │   │   ├── Bookings.jsx
+│   │   │   ├── Assessment.jsx
+│   │   │   ├── AssessmentHome.jsx
 │   │   │   ├── Chatbot.jsx
 │   │   │   ├── CheckIn.jsx
 │   │   │   ├── Community.jsx
+│   │   │   ├── Connect.jsx
 │   │   │   ├── Dashboard.jsx
+│   │   │   ├── JoinLobby.jsx
 │   │   │   ├── Landing.jsx
 │   │   │   ├── Login.jsx
 │   │   │   ├── Onboarding.jsx
 │   │   │   ├── Progress.jsx
 │   │   │   ├── Register.jsx
-│   │   │   └── Resources.jsx
+│   │   │   ├── Resources.jsx
+│   │   │   ├── ResultsHistory.jsx
+│   │   │   ├── Schedule.jsx
+│   │   │   └── VideoMeet.jsx
 │   │   ├── services/
 │   │   │   └── api.js
 │   │   ├── App.jsx
@@ -277,12 +281,25 @@ mental-health-platform/
 - `POST /api/assessments/submit-flow` - Submit wellbeing check-in (calculates hidden clinical scores & safety triggers)
 - `GET /api/assessments/results` - Get user's assessment history
 
-### Bookings
-- `POST /api/bookings/book` - Book counseling session (Student only)
-- `GET /api/bookings/student` - Get student bookings
-- `GET /api/bookings/counselor` - Get counselor bookings
-- `POST /api/bookings/availability` - Set availability (Counselor only)
-- `PUT /api/bookings/:bookingId/status` - Update booking status (Counselor only)
+### Connect & Bookings
+- `POST /api/connect/book` - Book counseling session (Student only)
+- `GET /api/connect/student` - Get student bookings
+- `GET /api/connect/counselors` - Get list of counselors (Student only)
+- `GET /api/connect/counselors/:counselorId/availability` - Get counselor available slots (Student only)
+- `POST /api/connect/availability` - Set availability (Counselor only)
+- `GET /api/connect/counselor` - Get counselor bookings
+- `PUT /api/connect/:bookingId/status` - Update booking status (Counselor only)
+- `DELETE /api/connect/:bookingId` - Delete a booking slot (Counselor only)
+- `GET /api/connect/insights/:studentId` - Get student insights (Counselor only)
+
+### Video Activity
+- `POST /api/video/history` - Add a video to user history
+- `GET /api/video/history` - Get user video history
+
+### Notifications
+- `GET /api/notifications` - Get user notifications
+- `PUT /api/notifications/:id/read` - Mark a notification as read
+- `POST /api/notifications/mark-all-read` - Mark all notifications as read
 
 ### Admin & Moderation
 - `GET /api/admin/users` - Get all users (Admin only)
@@ -300,7 +317,7 @@ mental-health-platform/
 2. **Dashboard:** View AI-recommended resources tailored to your specific stress and mood levels.
 3. **Progress:** Visit the *My Progress* tab to view beautiful area charts tracking your mental health journey over time.
 4. **Routine:** Take routine *Check-Ins* to update your stats and refresh your resource recommendations.
-5. **Support:** Participate in the anonymous Community forum with threaded replies, use the Gemini AI Chatbot, or book a counseling session.
+5. **Support:** Participate in the anonymous Community forum with threaded replies, use the Groq AI Chatbot, or book a counseling session.
 
 ### For Counselors
 1. Log in to access the dedicated Counselor Dashboard.
@@ -346,9 +363,7 @@ To test the platform:
 1. **Install dependencies:**
    ```bash
    cd backend && npm install
-   cd ../frontend && npm install
-   npm install recharts react-is --legacy-peer-deps
-   npm install framer-motion --legacy-peer-deps
+   cd ../frontend && npm install --legacy-peer-deps
    ```
 
 2. **Configure environment:**
@@ -402,13 +417,13 @@ To test the platform:
 
 ## 📝 Notes
 
-- The chatbot uses the Gemini API if `GEMINI_API_KEY` is provided, otherwise uses mock JSON responses
+- The chatbot uses the Groq API if `GROQ_API_KEY` is provided, otherwise uses mock JSON responses
 - Risk detection scans for crisis keywords and calculates risk scores
 - All data is isolated by `collegeId` for multi-tenant security
 - Anonymous posts/comments store user ID but display alias/name based on `isAnonymous` flag
 
 ## ✅ Recent Major Updates
-- **Three-Objective Refactor:** Migrated the AI Chatbot to **Gemini 2.0** utilizing strictly structured JSON outputs. Introduced **nested comment threads with @mentions** in the community forum. Developed **reusable, animated clinical exercise widgets** (Breathing & Grounding) shared seamlessly between the AI Chatbot and Resource Hub.
+- **Three-Objective Refactor:** Migrated the AI Chatbot to **Llama 3.3 (via Groq)** utilizing strictly structured JSON outputs. Introduced **nested comment threads with @mentions** in the community forum. Developed **reusable, animated clinical exercise widgets** (Breathing & Grounding) shared seamlessly between the AI Chatbot and Resource Hub.
 - **Stigma-Free Redesign:** Ripped out legacy clinical testing forms. Replaced with a warm, progressive-disclosure onboarding flow that seamlessly maps to clinical scales (PHQ-9, GAD-7, PSS).
 - **Visual Analytics:** Integrated `recharts` to build a premium user progress dashboard mapping wellbeing trends.
 - **Safety First:** Added the `needsIntervention` database trigger to instantly flag accounts showing self-harm indicators during check-ins.
