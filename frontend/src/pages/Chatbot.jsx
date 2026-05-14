@@ -117,7 +117,7 @@ export default function Chatbot() {
       setMessages(prev => [...prev, {
         _id: Date.now().toString(),
         role: 'assistant',
-        content: "I'm having trouble connecting right now. Please re-synchronize the session.",
+        content: "I'm having a little trouble connecting right now. Please try again in a moment.",
         createdAt: new Date()
       }]);
     } finally {
@@ -127,7 +127,7 @@ export default function Chatbot() {
 
   const handleCloseSession = async () => {
     if (!session?._id) return;
-    if (!window.confirm("Archive current session and generate clinical summary?")) return;
+    if (!window.confirm("End this conversation and save the summary?")) return;
 
     try {
       setLoading(true);
@@ -146,7 +146,7 @@ export default function Chatbot() {
       <div className="min-h-screen bg-[#fcfdfe] flex items-center justify-center">
         <div className="text-center">
             <div className="w-12 h-12 border-4 border-indigo-50 border-t-indigo-600 rounded-full animate-spin mx-auto mb-6" />
-            <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Establishing Secure Uplink...</p>
+            <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Connecting...</p>
         </div>
       </div>
     );
@@ -172,10 +172,10 @@ export default function Chatbot() {
               Aura
             </h1>
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Clinical AI Guide</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Virtual Assistant</span>
               <div className="w-1 h-1 rounded-full bg-slate-200"></div>
               <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${riskLevel === 'low' ? 'text-emerald-500' : riskLevel === 'moderate' ? 'text-amber-500' : 'text-rose-500'}`}>
-                Intensity: {riskLevel}
+                Mood: {riskLevel}
               </span>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function Chatbot() {
           onClick={handleCloseSession}
           className="px-6 py-2.5 rounded-2xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:bg-rose-50 hover:text-rose-500 transition-all active:scale-95"
         >
-          Archive Session
+          End Chat
         </button>
       </header>
 
@@ -202,18 +202,18 @@ export default function Chatbot() {
             <div className="w-24 h-24 rounded-[2.5rem] bg-white border border-slate-100 flex items-center justify-center text-5xl mb-10 shadow-sm font-serif italic text-indigo-300">
                ?
             </div>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 mb-4">Initial Contact</p>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-none mb-4">Honesty begins here.</h2>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 mb-4">Chat</p>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter leading-none mb-4">How are you today?</h2>
             <p className="max-w-md text-slate-500 font-medium leading-relaxed mb-12">
-              Aura is your private clinical shadow. Talk freely about stress, patterns, or daily weight. Our conversation is filtered through empathy and data.
+              Aura is your private space to talk. Share what's on your mind—stress, thoughts, or just how your day is going. I'm here to listen and help.
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
               {[
-                'I feel a weight on my chest lately', 
-                'Academic burnout is reaching a peak', 
-                'Help me find a grounding pattern', 
-                'Just need a private space to vent'
+                'I have been feeling stressed lately', 
+                'I am feeling a bit overwhelmed', 
+                'Help me find a way to relax', 
+                'I just need someone to talk to'
               ].map(txt => (
                 <button 
                   key={txt}
@@ -262,7 +262,7 @@ export default function Chatbot() {
                   handleSend();
                 }
               }}
-              placeholder="Record your thoughts..."
+              placeholder="How are you feeling?"
               className="flex-1 bg-transparent border-none focus:ring-0 text-slate-900 font-black tracking-tight placeholder:text-slate-300 py-4 pl-6 pr-2 resize-none max-h-48 custom-scrollbar"
             />
             <button
@@ -280,7 +280,7 @@ export default function Chatbot() {
             </button>
           </div>
           <p className="mt-4 text-center text-[10px] text-slate-300 font-black uppercase tracking-[0.3em] px-4">
-            Security: Clinical Data Managed Locally • End-to-End Encryption Enabled
+            MindSpace • Your safe space for mental wellbeing
           </p>
         </form>
       </footer>

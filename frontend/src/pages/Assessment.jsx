@@ -4,18 +4,18 @@ import { assessmentAPI } from '../services/api';
 import DisclaimerModal from '../components/DisclaimerModal';
 
 const PHQ9_SEVERITY = [
-  { max: 4, label: 'Optimal Balance', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
-  { max: 9, label: 'Soft Concern', color: 'text-blue-600 bg-blue-50 border-blue-200' },
-  { max: 14, label: 'Focused Support Needed', color: 'text-amber-600 bg-amber-50 border-amber-200' },
-  { max: 19, label: 'Clinical Attention Recommended', color: 'text-orange-600 bg-orange-50 border-orange-200' },
-  { max: 27, label: 'Urgent Wellbeing Care', color: 'text-rose-600 bg-rose-50 border-rose-200' },
+  { max: 4, label: 'Feeling Great', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+  { max: 9, label: 'Feeling Okay', color: 'text-blue-600 bg-blue-50 border-blue-200' },
+  { max: 14, label: 'Needs Attention', color: 'text-amber-600 bg-amber-50 border-amber-200' },
+  { max: 19, label: 'Needs Support', color: 'text-orange-600 bg-orange-50 border-orange-200' },
+  { max: 27, label: 'Needs Urgent Support', color: 'text-rose-600 bg-rose-50 border-rose-200' },
 ];
 
 const GAD7_SEVERITY = [
-  { max: 4, label: 'Serene Baseline', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
-  { max: 9, label: 'Mild Restlessness', color: 'text-blue-600 bg-blue-50 border-blue-200' },
-  { max: 14, label: 'Significant Strain', color: 'text-amber-600 bg-amber-50 border-amber-200' },
-  { max: 21, label: 'High Anxiety Alert', color: 'text-rose-600 bg-rose-50 border-rose-200' },
+  { max: 4, label: 'Calm', color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+  { max: 9, label: 'Slightly Anxious', color: 'text-blue-600 bg-blue-50 border-blue-200' },
+  { max: 14, label: 'Very Anxious', color: 'text-amber-600 bg-amber-50 border-amber-200' },
+  { max: 21, label: 'Highly Anxious', color: 'text-rose-600 bg-rose-50 border-rose-200' },
 ];
 
 const MAX_SCORE = { phq9: 27, gad7: 21 };
@@ -63,7 +63,7 @@ export default function Assessment() {
 
     assessmentAPI.fetchQuestionnaire(type)
       .then((data) => setQuestionnaire(data))
-      .catch(() => setFetchError('The questionnaire could not be synchronized.'))
+      .catch(() => setFetchError('We couldn\'t load the check-in questions right now.'))
       .finally(() => setLoading(false));
   }, [type]);
 
@@ -103,7 +103,7 @@ export default function Assessment() {
         <div className="text-center">
           <div className="w-10 h-10 border-4 border-indigo-50 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">
-            Initializing Pulse Logic...
+            Loading check-in...
           </p>
         </div>
       </div>
@@ -116,10 +116,10 @@ export default function Assessment() {
       <div className="min-h-screen bg-[#fcfdfe] flex items-center justify-center p-6 text-center">
         <div className="bg-white border border-slate-200 rounded-2xl p-10 max-w-md w-full">
           <div className="text-3xl mb-4">⚠️</div>
-          <h3 className="text-xl font-black text-slate-900 mb-2">Sync Error</h3>
+          <h3 className="text-xl font-black text-slate-900 mb-2">Connection Error</h3>
           <p className="text-slate-400 font-medium text-sm mb-8">{fetchError}</p>
-          <button className="btn-serene-primary w-full" onClick={() => navigate('/assessment')}>
-            Back to Catalog
+          <button className="btn-serene-primary w-full" onClick={() => navigate('/check-in')}>
+            Back to Check-Ins
           </button>
         </div>
       </div>
@@ -136,7 +136,7 @@ export default function Assessment() {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-indigo-400 to-rose-400" />
 
           <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] mb-8">
-            {questionnaire.title} • Outcome
+            {questionnaire.title} • Results
           </p>
 
           {/* Score circle */}
@@ -152,7 +152,7 @@ export default function Assessment() {
           </div>
 
           <p className="text-slate-500 font-medium text-sm leading-relaxed mb-8 max-w-xs mx-auto">
-            Your results have been securely finalized in your archive. Use this baseline to navigate your next steps.
+            Your results have been saved to your journey history. We're here to help you through your next steps.
           </p>
 
           {saveWarning && (
@@ -163,10 +163,10 @@ export default function Assessment() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button className="btn-serene-secondary !text-slate-400 border-slate-100 text-sm" onClick={handleRetake}>
-              Retake Assessment
+              Start Over
             </button>
             <button className="btn-serene-primary text-sm" onClick={() => navigate('/progress')}>
-              View Full Insights
+              View My Progress
             </button>
           </div>
 
@@ -191,7 +191,7 @@ export default function Assessment() {
       {!disclaimerDone && (
         <DisclaimerModal
           onAcknowledge={() => setDisclaimerDone(true)}
-          onBack={() => navigate('/assessment')}
+          onBack={() => navigate('/check-in')}
         />
       )}
 
@@ -202,9 +202,9 @@ export default function Assessment() {
         {/* Back link */}
         <button
           className="self-start text-[10px] font-black uppercase tracking-[0.3em] text-slate-300 hover:text-indigo-400 transition-colors mb-8 flex items-center gap-2"
-          onClick={() => navigate('/assessment')}
+          onClick={() => navigate('/check-in')}
         >
-          ← Back to Hub
+          ← Back
         </button>
 
         {/* Question */}
@@ -245,11 +245,11 @@ export default function Assessment() {
               : 'bg-indigo-600 text-white hover:bg-indigo-500 hover:-translate-y-0.5 shadow-lg shadow-indigo-100'
             }`}
         >
-          {currentIndex + 1 === questions.length ? 'Submit Final Signal' : 'Next Step →'}
+          {currentIndex + 1 === questions.length ? 'Finish Check-In' : 'Next Step →'}
         </button>
 
         <p className="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-200">
-          Question {currentIndex + 1} of {questions.length} • Confidential
+          Question {currentIndex + 1} of {questions.length} • Your privacy is protected
         </p>
       </div>
     </div>

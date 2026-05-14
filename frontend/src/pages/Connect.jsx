@@ -94,7 +94,13 @@ const Connect = () => {
   const handleSetAvailability = async (e) => {
     e.preventDefault();
     try {
-      await connectAPI.setAvailability(newAvailability);
+      // Normalize to UTC before sending to backend to prevent timezone drift
+      const utcAvailability = {
+        slotStart: new Date(newAvailability.slotStart).toISOString(),
+        slotEnd: new Date(newAvailability.slotEnd).toISOString()
+      };
+      
+      await connectAPI.setAvailability(utcAvailability);
       setShowAvailabilityModal(false);
       setNewAvailability({ slotStart: '', slotEnd: '' });
       fetchData();
@@ -154,8 +160,8 @@ const Connect = () => {
             <h1 className="text-5xl font-black text-slate-900 tracking-tight mb-4">Support Hub</h1>
             <p className="text-slate-500 font-medium text-lg max-w-2xl leading-relaxed">
               {user?.role === 'student' 
-                ? 'Discover a professional clinical match and secure your one-on-one sessions.'
-                : 'Coordinate your availability and manage student intervention requests.'
+                ? 'Find a counselor and book a session that fits your schedule.'
+                : 'Manage your availability and student session requests.'
               }
             </p>
           </div>
@@ -181,7 +187,7 @@ const Connect = () => {
         {loading ? (
           <div className="text-center py-40">
             <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-6" />
-            <p className="text-slate-400 font-black uppercase tracking-[0.3em] text-[10px]">Syncing Clinical Network...</p>
+            <p className="text-slate-400 font-black uppercase tracking-[0.3em] text-[10px]">Connecting to the network...</p>
           </div>
         ) : (
           <div className="space-y-16">
@@ -190,11 +196,11 @@ const Connect = () => {
             {user?.role === 'student' && (
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-12 items-start">
                 
-                {/* Left: Professionals Selection */}
+                {/* Left: Counselor Selection */}
                 <div className="xl:col-span-8 space-y-8">
                   <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                     <h2 className="text-sm font-black uppercase tracking-widest text-slate-400">Available Professionals</h2>
-                     <span className="text-[10px] font-black uppercase text-indigo-400">{counselors.length} Matches Found</span>
+                     <h2 className="text-sm font-black uppercase tracking-widest text-slate-400">Our Counselors</h2>
+                     <span className="text-[10px] font-black uppercase text-indigo-400">{counselors.length} Available</span>
                   </div>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -216,7 +222,7 @@ const Connect = () => {
                           </div>
                           <div>
                             <h3 className={`font-black tracking-tight text-lg transition-colors ${selectedCounselor?._id === c._id ? 'text-indigo-600' : 'text-slate-900'}`}>{c.name}</h3>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">{c.profile?.specialization || 'Clinical Representative'}</p>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">{c.profile?.specialization || 'Support Specialist'}</p>
                           </div>
                         </div>
                         <p className="text-sm text-slate-500 font-medium leading-relaxed italic line-clamp-2">
@@ -284,11 +290,11 @@ const Connect = () => {
                           </div>
 
                           <div>
-                             <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Clinical Context (Optional)</label>
+                             <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Additional Notes (Optional)</label>
                              <textarea 
                                className="w-full p-5 bg-slate-50/50 rounded-2xl border-none text-sm font-medium resize-none focus:ring-4 ring-indigo-50 transition-all placeholder:text-slate-300"
                                rows="4"
-                               placeholder="Add any specific topics or challenges you'd like to address..."
+                               placeholder="Add any specific topics or challenges you'd like to talk about..."
                                value={bookingData.studentNotes}
                                onChange={(e) => setBookingData({ ...bookingData, studentNotes: e.target.value })}
                              />
@@ -304,11 +310,11 @@ const Connect = () => {
                         </button>
                       </form>
                     ) : (
-                      <div className="py-24 text-center">
-                        <div className="w-20 h-20 rounded-full bg-indigo-50 flex items-center justify-center mx-auto mb-8 text-4xl shadow-inner italic font-serif text-indigo-300 animate-pulse">?</div>
-                        <h3 className="text-xl font-black text-slate-900 mb-2 tracking-tight">Select Professional</h3>
-                        <p className="text-slate-400 text-xs font-bold px-8 leading-relaxed">Choose a counselor on the left to view their clinical availability schedule.</p>
-                      </div>
+                        <div className="py-24 text-center">
+                          <div className="w-20 h-20 rounded-full bg-indigo-50 flex items-center justify-center mx-auto mb-8 text-4xl shadow-inner italic font-serif text-indigo-300 animate-pulse">?</div>
+                          <h3 className="text-xl font-black text-slate-900 mb-2 tracking-tight">Select Counselor</h3>
+                          <p className="text-slate-400 text-xs font-bold px-8 leading-relaxed">Choose a counselor on the left to view their available schedule.</p>
+                        </div>
                     )}
                   </div>
                 </div>
@@ -319,9 +325,9 @@ const Connect = () => {
             {user?.role === 'counselor' && (
               <div className="space-y-12">
                 <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
-                   <h2 className="text-sm font-black uppercase tracking-widest text-slate-400">Incoming Requests & Slots</h2>
+                   <h2 className="text-sm font-black uppercase tracking-widest text-slate-400">Incoming Requests</h2>
                    <div className="w-px h-4 bg-slate-200" />
-                   <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">{myBookings.length} Total Units</span>
+                   <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">{myBookings.length} Total Slots</span>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -337,7 +343,7 @@ const Connect = () => {
                         </div>
                         {booking.studentId && (
                            <button onClick={() => handleViewInsights(booking.studentId._id)} className="text-[10px] font-black uppercase text-indigo-400 hover:text-indigo-600 tracking-[0.2em] transition-colors border-b border-transparent hover:border-indigo-200">
-                             Clinical Profile →
+                             Student Profile →
                            </button>
                         )}
                       </div>
@@ -368,7 +374,7 @@ const Connect = () => {
                         )}
                         {(booking.status === 'available' || booking.status === 'rejected') && (
                           <button onClick={() => handleDeleteSlot(booking._id)} className="w-full py-4 rounded-2xl bg-slate-50 text-slate-400 hover:bg-rose-50 hover:text-rose-500 font-black text-xs transition-all uppercase tracking-widest">
-                            Purge Records
+                            Remove Slot
                           </button>
                         )}
                         {booking.status === 'approved' && (
@@ -390,23 +396,23 @@ const Connect = () => {
           <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-xl flex items-center justify-center z-[200] p-6">
             <div className="bg-white p-12 rounded-[4rem] max-w-lg w-full shadow-2xl animate-in fade-in slide-in-from-bottom-5 duration-500 border-none relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-400 via-pink-400 to-emerald-400" />
-              <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-2">Publish Session</h2>
-              <p className="text-slate-400 text-sm font-bold mb-10 tracking-wide">Set your clinical availability parameters.</p>
+              <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-2">Add Availability</h2>
+              <p className="text-slate-400 text-sm font-bold mb-10 tracking-wide">Set your available session times.</p>
               
               <form onSubmit={handleSetAvailability}>
                 <div className="space-y-8 mb-12">
                   <div className="space-y-4">
-                    <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">Start Time Transition</label>
+                    <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">Start Time</label>
                     <input type="datetime-local" className="w-full p-5 bg-slate-50 rounded-2xl border-none font-black text-slate-900 focus:ring-4 ring-indigo-50 transition-all" value={newAvailability.slotStart} onChange={(e) => setNewAvailability({ ...newAvailability, slotStart: e.target.value })} required />
                   </div>
                   <div className="space-y-4">
-                    <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">Conclusion Point</label>
+                    <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">End Time</label>
                     <input type="datetime-local" className="w-full p-5 bg-slate-50 rounded-2xl border-none font-black text-slate-900 focus:ring-4 ring-indigo-50 transition-all" value={newAvailability.slotEnd} onChange={(e) => setNewAvailability({ ...newAvailability, slotEnd: e.target.value })} required />
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <button type="button" onClick={() => setShowAvailabilityModal(false)} className="px-6 font-black text-slate-300 uppercase tracking-widest text-xs hover:text-slate-500 transition-colors">Abort</button>
-                  <button type="submit" className="flex-1 btn-serene-primary !py-5 shadow-2xl shadow-indigo-200">Broadcast Now</button>
+                  <button type="button" onClick={() => setShowAvailabilityModal(false)} className="px-6 font-black text-slate-300 uppercase tracking-widest text-xs hover:text-slate-500 transition-colors">Cancel</button>
+                  <button type="submit" className="flex-1 btn-serene-primary !py-5 shadow-2xl shadow-indigo-200">Save Availability</button>
                 </div>
               </form>
             </div>
@@ -419,8 +425,8 @@ const Connect = () => {
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400" />
                 <div className="flex justify-between items-center mb-12">
                    <div>
-                      <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Clinical Insights</h2>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Cross-Platform Data Aggregation</p>
+                       <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Student Insights</h2>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Wellbeing Summary</p>
                    </div>
                    <button onClick={() => setShowInsightsModal(false)} className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-400 font-bold transition-all">✕</button>
                 </div>
@@ -428,23 +434,23 @@ const Connect = () => {
                 {insightsLoading ? (
                   <div className="py-24 text-center">
                     <div className="w-12 h-12 border-4 border-indigo-50 border-t-indigo-500 rounded-full animate-spin mx-auto mb-6" />
-                    <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Filtering Signal from Noise...</p>
+                    <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Analyzing insights...</p>
                   </div>
                 ) : selectedStudentInsights && (
                   <div className="space-y-12">
                      <div className="grid grid-cols-2 gap-4">
                         <div className="p-6 rounded-[2.5rem] bg-indigo-50/30 border border-indigo-50">
-                           <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">Total Touchpoints</p>
+                           <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">Total Sessions</p>
                            <p className="text-4xl font-black text-indigo-600">{selectedStudentInsights.results?.length || 0}</p>
                         </div>
                         <div className="p-6 rounded-[2.5rem] bg-pink-50/30 border border-pink-50">
-                           <p className="text-[10px] font-black uppercase tracking-widest text-pink-400 mb-2">Dominant Aura</p>
+                           <p className="text-[10px] font-black uppercase tracking-widest text-pink-400 mb-2">Overall Mood</p>
                            <p className="text-2xl font-black text-pink-600 truncate">{selectedStudentInsights.emotions?.[0] || 'Neutral'}</p>
                         </div>
                      </div>
 
                      <div>
-                        <label className="block text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Sentiment Spectrum Analysis</label>
+                        <label className="block text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Mood Trends</label>
                         <div className="flex flex-wrap gap-2.5">
                            {selectedStudentInsights.emotions?.map(e => (
                              <span key={e} className="px-5 py-2.5 rounded-2xl bg-white border-2 border-slate-50 text-slate-600 text-xs font-black shadow-sm group hover:border-indigo-100 transition-all cursor-default">
@@ -455,7 +461,7 @@ const Connect = () => {
                      </div>
                      
                      <div className="pb-8">
-                        <label className="block text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Screening History (Chronological)</label>
+                        <label className="block text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Check-In History</label>
                         <div className="space-y-4">
                            {selectedStudentInsights.results?.map((r, i) => (
                              <div key={i} className="flex justify-between items-center p-6 rounded-[2rem] bg-slate-50/50 border border-white hover:bg-white hover:shadow-xl hover:shadow-slate-100 transition-all group">

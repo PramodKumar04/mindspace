@@ -5,58 +5,58 @@ const STEPS = [
   {
     icon: '🧘',
     step: 'Step 01',
-    title: 'Self-Reflection',
-    desc: 'Begin with clinically validated PHQ-9 and GAD-7 screenings to understand your current state of mind.',
+    title: 'Check-In',
+    desc: 'Start with simple check-ins to see how you\'re feeling and track your mood over time.',
   },
   {
     icon: '🌿',
     step: 'Step 02',
-    title: 'Personalized Care',
-    desc: 'Receive a curated selection of resources, exercises, and insights tailored specifically to your needs.',
+    title: 'Personalized Support',
+    desc: 'Get a curated selection of resources, exercises, and tips tailored just for you.',
   },
   {
     icon: '🤝',
     step: 'Step 03',
-    title: 'Professional Connection',
-    desc: 'Seamlessly transition to human support through our clinical booking system or 24/7 AI assistance.',
+    title: 'Connect with Help',
+    desc: 'Easily book a session with a counselor or chat with our 24/7 AI assistant whenever you need it.',
   },
 ];
 
 const FEATURES = [
   { 
     icon: '🧠', 
-    title: 'Clinical Screenings', 
-    desc: 'Standardized tools to monitor your mental wellbeing over time with privacy.', 
+    title: 'Wellness Check-Ins', 
+    desc: 'Simple tools to track your mental wellbeing over time with complete privacy.', 
     theme: 'bg-rose-50 text-rose-600 border-rose-100' 
   },
   { 
     icon: '✨', 
-    title: 'Empathetic AI', 
+    title: 'Supportive AI', 
     desc: 'A constant companion available 24/7 for immediate support and guidance.', 
     theme: 'bg-blue-50 text-blue-600 border-blue-100' 
   },
   { 
     icon: '🎭', 
-    title: 'Personalized Insight', 
-    desc: 'Dynamic resource matching based on your live assessments and check-ins.', 
+    title: 'Daily Insights', 
+    desc: 'Get resources and articles recommended for you based on your check-ins.', 
     theme: 'bg-emerald-50 text-emerald-600 border-emerald-100' 
   },
   { 
     icon: '🏛️', 
-    title: 'Campus Focused', 
-    desc: 'Integrated directly with your college support systems and peer community.', 
+    title: 'Campus Community', 
+    desc: 'Connect with your college support systems and a safe peer community.', 
     theme: 'bg-purple-50 text-purple-600 border-purple-100' 
   },
   { 
     icon: '📱', 
-    title: 'Modern Booking', 
-    desc: 'High-end scheduling system to connect with professionals when you need them.', 
+    title: 'Easy Appointments', 
+    desc: 'A simple way to book sessions with professional counselors when you need them.', 
     theme: 'bg-amber-50 text-amber-600 border-amber-100' 
   },
   { 
     icon: '🛡️', 
-    title: 'Absolute Privacy', 
-    desc: 'State-of-the-art encryption ensures your data remains your own.', 
+    title: 'Total Privacy', 
+    desc: 'Your data is encrypted and kept private. You are in control of your journey.', 
     theme: 'bg-slate-50 text-slate-600 border-slate-100' 
   },
 ];
@@ -84,7 +84,7 @@ export default function Landing() {
         <section className="pt-32 pb-24 text-center">
           <div className="inline-block px-4 py-1.5 rounded-full bg-white/40 backdrop-blur-md border border-white/50 mb-8 shadow-sm">
              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-900/60 leading-none">
-               A Healing Space for Students
+               A Supportive Space for Students
              </p>
           </div>
           
@@ -94,8 +94,7 @@ export default function Landing() {
           </h1>
 
           <p className="max-w-xl mx-auto text-lg sm:text-xl text-slate-600 font-medium leading-relaxed mb-12">
-            MindSpace provides a safe, clinical, and compassionate environment 
-            for students to track their mental wellbeing and find professional support.
+            MindSpace provides a safe and supportive space for students to track their wellbeing and find the help they need.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -110,7 +109,7 @@ export default function Landing() {
               </>
             ) : (
               <Link to="/dashboard" className="btn-serene-primary w-full sm:w-auto text-center py-5 px-12 text-lg">
-                View Your Dashboard →
+                Go to Dashboard →
               </Link>
             )}
           </div>
@@ -142,7 +141,7 @@ export default function Landing() {
         {/* ── FEATURES GRID ── */}
         <section className="py-24">
            <div className="text-center mb-16">
-              <h2 className="text-4xl font-black text-slate-900 mb-4">Professional Tools</h2>
+              <h2 className="text-4xl font-black text-slate-900 mb-4">Supportive Tools</h2>
               <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Everything you need in one place</p>
            </div>
 
@@ -167,13 +166,13 @@ export default function Landing() {
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-100/50 rounded-full blur-3xl -ml-32 -mb-32" />
                 
                 <div className="relative z-10">
-                   <h2 className="text-5xl font-black text-slate-900 mb-6">Your healing begins today.</h2>
+                   <h2 className="text-5xl font-black text-slate-900 mb-6">Your wellness journey starts today.</h2>
                    <p className="max-w-lg mx-auto text-slate-500 font-medium mb-12">
                       Join a supportive community designed for your wellbeing. 
                       Take the first step towards a calmer, more focused campus life.
                    </p>
                    <Link to="/register" className="btn-serene-primary inline-block">
-                      Free Membership
+                      Join for Free
                    </Link>
                 </div>
              </div>
@@ -183,7 +182,7 @@ export default function Landing() {
         {/* ── FOOTER ── */}
         <footer className="py-12 border-t border-slate-200/40 text-center">
            <p className="text-slate-400 text-xs font-bold font-['Plus_Jakarta_Sans'] uppercase tracking-[0.2em] leading-loose">
-              MindSpace • Digital Psychological Intervention Platform <br />
+              MindSpace • Your Digital Mental Health Companion <br />
               <span className="font-normal normal-case italic text-slate-300">Supported by your college health department</span>
            </p>
         </footer>

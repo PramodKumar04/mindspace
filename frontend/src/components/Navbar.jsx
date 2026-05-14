@@ -31,7 +31,7 @@ export default function Navbar() {
               to="/register"
               className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-2xl transition-all shadow-lg shadow-indigo-100 hover:-translate-y-0.5"
             >
-              Get Started
+              Join Now
             </Link>
           </div>
         ) : (
@@ -42,14 +42,17 @@ export default function Navbar() {
                 <Link to="/dashboard" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
                   Dashboard
                 </Link>
+                <Link to="/groups" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
+                  Groups
+                </Link>
                 <Link to="/schedule" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  My Schedule
+                  Schedule
                 </Link>
                 <Link to="/connect" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Connect
+                  Counseling
                 </Link>
                 <Link to="/chatbot" className="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-100 font-black tracking-wide">
-                  AI Support ✨
+                  Chat Assistant ✨
                 </Link>
               </>
             )}
@@ -58,16 +61,16 @@ export default function Navbar() {
             {user?.role === 'counselor' && (
               <>
                 <Link to="/dashboard" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Home
+                  Dashboard
                 </Link>
                 <Link to="/schedule" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  My Schedule
+                  Schedule
                 </Link>
                 <Link to="/connect" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Manage Access
+                  Appointments
                 </Link>
                 <Link to="/manage-resources" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Resource Library
+                  Resources
                 </Link>
               </>
             )}
@@ -76,7 +79,7 @@ export default function Navbar() {
             {user?.role === 'admin' && (
               <>
                 <Link to="/admin" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  System Mgmt
+                  Admin
                 </Link>
                 <Link to="/manage-resources" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
                   Resources

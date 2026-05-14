@@ -33,34 +33,45 @@ export const setAvailability = async (req, res, next) => {
       return res.status(400).json({ message: 'Start and end times are required' });
     }
 
+    // slotStart and slotEnd are already Date objects from express-validator .toDate()
+    // We normalize to ensure no millisecond-level conflicts
     const start = new Date(slotStart);
+    start.setSeconds(0, 0);
+    
     const end = new Date(slotEnd);
+    end.setSeconds(0, 0);
 
     if (start >= end) {
-      return res.status(400).json({ message: 'End time must be after start time' });
+      return res.status(400).json({ message: 'Conclusion point must be after start time transition.' });
     }
 
-    if (start < new Date()) {
-      return res.status(400).json({ message: 'Cannot create slots in the past' });
+    // Safety: ensure slot is in the future (allow 1 minute buffer for network latency)
+    const now = new Date();
+    now.setSeconds(0, 0);
+    if (start < now) {
+      return res.status(400).json({ message: 'Cannot synchronize slots in the past temporal space.' });
     }
 
-    // Check for conflicts with pending/approved/available slots
+    // Check for TRUE overlaps
+    // An overlap exists if: (ExistingStart < NewEnd) AND (ExistingEnd > NewStart)
     const conflict = await Booking.findOne({
       counselorId: req.user.userId,
       status: { $in: ['available', 'pending', 'approved'] },
-      $or: [
-        {
-          slotStart: { $lt: end },
-          slotEnd: { $gt: start }
-        }
-      ]
+      slotStart: { $lt: end },
+      slotEnd: { $gt: start }
     });
 
     if (conflict) {
-      return res.status(400).json({ message: 'Time slot conflicts with an existing booking or availability block.' });
+      return res.status(400).json({ 
+        message: 'Temporal conflict detected: This slot overlaps with an existing clinical unit.',
+        conflictingSlot: {
+          start: conflict.slotStart,
+          end: conflict.slotEnd
+        }
+      });
     }
 
-    // Create availability slot natively
+    // Create availability slot
     const availability = await Booking.create({
       counselorId: req.user.userId,
       collegeId: req.user.collegeId,
@@ -69,7 +80,7 @@ export const setAvailability = async (req, res, next) => {
       status: 'available'
     });
 
-    res.status(201).json({ message: 'Availability slot published successfully.', availability });
+    res.status(201).json({ message: 'Availability cluster published successfully.', availability });
   } catch (error) {
     next(error);
   }
@@ -111,7 +122,11 @@ export const bookSession = async (req, res, next) => {
 
     // Lock the booking if it's currently 'available'
     const booking = await Booking.findOneAndUpdate(
-      { _id: bookingId, status: 'available' },
+      { 
+        _id: bookingId, 
+        status: 'available',
+        slotStart: { $gt: new Date() } // Ensure it's still in the future
+      },
       { 
         status: 'pending',
         studentId: req.user.userId,
@@ -123,7 +138,7 @@ export const bookSession = async (req, res, next) => {
     if (!booking) {
       await session.abortTransaction();
       session.endSession();
-      return res.status(400).json({ message: 'This slot was just taken. Please choose another one.' });
+      return res.status(400).json({ message: 'This slot is no longer available or has already passed.' });
     }
 
     await session.commitTransaction();

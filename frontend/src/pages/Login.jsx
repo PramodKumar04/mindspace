@@ -22,7 +22,7 @@ const Login = () => {
       else if (role === 'student' && !hasCompletedOnboarding) navigate('/onboarding');
       else navigate('/dashboard');
     } else {
-      setError(result.message || 'The credentials provided do not match our records.');
+      setError(result.message || 'The email or password you entered is incorrect.');
     }
     setLoading(false);
   };
@@ -43,12 +43,12 @@ const Login = () => {
             <span className="text-white">🌿</span>
           </div>
           <h1 className="text-5xl font-black text-slate-900 tracking-tighter mb-1">MindSpace</h1>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">Clinical Support Access</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">Your mental health companion</p>
         </div>
 
         {/* Auth Panel */}
         <div className="glass-panel !rounded-[3rem] p-10 lg:p-12 shadow-2xl border-none">
-          <h2 className="text-2xl font-black text-slate-900 mb-8 tracking-tight text-center">Welcome back.</h2>
+          <h2 className="text-2xl font-black text-slate-900 mb-8 tracking-tight text-center">Welcome back!</h2>
           
           {error && (
             <div className="bg-rose-50 border border-rose-100 text-rose-500 p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-center mb-8">
@@ -59,7 +59,7 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-3">
-                Email Identity
+                Email Address
               </label>
               <input
                 id="email"
@@ -75,7 +75,7 @@ const Login = () => {
 
             <div>
               <label htmlFor="password" className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-3">
-                Security Key
+                Password
               </label>
               <input
                 id="password"
@@ -97,7 +97,7 @@ const Login = () => {
                 : 'bg-indigo-600 text-white shadow-indigo-100 hover:bg-indigo-500 hover:-translate-y-1'
               }`}
             >
-              {loading ? 'Validating...' : 'Enter Hub →'}
+              {loading ? 'Signing you in...' : 'Sign In →'}
             </button>
           </form>
 
@@ -108,15 +108,15 @@ const Login = () => {
           </div>
 
           <p className="text-center font-black text-[10px] uppercase tracking-widest text-slate-400">
-            New to the network?{' '}
+            Don't have an account?{' '}
             <Link to="/register" className="text-indigo-600 hover:text-indigo-400 border-b-2 border-indigo-50 transition-all pb-0.5">
-              Create credentials
+              Create one here
             </Link>
           </p>
         </div>
 
         <p className="text-center text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mt-16 leading-relaxed">
-          MindSpace Clinical Protocol <br /> Secured by Campus Cryptography
+          MindSpace • Your safe space for mental wellbeing
         </p>
       </div>
     </div>

@@ -66,10 +66,10 @@ const Schedule = () => {
         
         {/* Header Section */}
         <div className="mb-16">
-           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-2">Calendar Coordination</p>
+           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-2">Your Schedule</p>
            <h1 className="text-5xl font-black text-slate-900 tracking-tighter">My Sessions</h1>
            <p className="text-slate-500 font-medium text-lg mt-4 max-w-xl">
-             Manage your clinical touchpoints and session history in one unified view.
+             View your upcoming sessions and previous history in one place.
            </p>
         </div>
 
@@ -100,7 +100,7 @@ const Schedule = () => {
         {loading ? (
           <div className="text-center py-40">
              <div className="w-12 h-12 border-4 border-indigo-50 border-t-indigo-500 rounded-full animate-spin mx-auto mb-6" />
-             <p className="text-slate-300 font-black text-[10px] tracking-[0.3em] uppercase animate-pulse">Synchronizing Data Nodes...</p>
+             <p className="text-slate-300 font-black text-[10px] tracking-[0.3em] uppercase animate-pulse">Syncing with the hub...</p>
           </div>
         ) : currentSessions.length === 0 ? (
           <div className="glass-panel !rounded-[3rem] p-24 text-center shadow-2xl border-none">
@@ -110,8 +110,8 @@ const Schedule = () => {
              <h3 className="text-2xl font-black text-slate-900 tracking-tight">Timeline is clear</h3>
              <p className="text-slate-400 mt-3 max-w-xs mx-auto font-medium">
                {activeTab === 'upcoming' 
-                 ? "You have no future sessions or clinical interventions scheduled currently."
-                 : "Your clinical history has no records to display from past engagements."
+                 ? "You have no upcoming sessions scheduled at the moment."
+                 : "You haven't had any previous sessions yet."
                }
              </p>
           </div>
@@ -138,14 +138,14 @@ const Schedule = () => {
 
                   <div className="flex items-start gap-6">
                     <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 border border-white shadow-inner flex items-center justify-center text-3xl">
-                      {user?.role === 'student' ? '👨‍🏫' : '👤'}
+                      {user?.role === 'student' ? '🎓' : '👤'}
                     </div>
                     <div>
                       <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">
-                         {user?.role === 'student' ? 'Professional Partner' : 'Student Member'}
+                         {user?.role === 'student' ? 'Counselor' : 'Student Member'}
                       </p>
                       <h3 className="text-4xl font-black text-slate-900 tracking-tighter leading-none mb-3">
-                        {user?.role === 'student' ? (session.counselorId?.name || 'Assigned Counsellor') : (session.studentId?.name || 'Student Member')}
+                        {user?.role === 'student' ? (session.counselorId?.name || 'Counsellor') : (session.studentId?.name || 'Student')}
                       </h3>
                       <div className="flex items-center gap-4 text-slate-500 font-bold text-sm bg-slate-50/50 w-fit px-4 py-2 rounded-xl">
                         <span>🗓️</span> {formatDate(session.slotStart)}
@@ -157,14 +157,14 @@ const Schedule = () => {
                     <div className="mt-8 p-6 bg-indigo-50/20 border border-indigo-100/50 rounded-[2rem] flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative">
                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-200/20 rounded-full blur-3xl -mr-16 -mt-16" />
                        <div className="relative z-10">
-                         <p className="text-[10px] font-black uppercase text-indigo-400 tracking-[0.3em] mb-2">Access Signal</p>
+                         <p className="text-[10px] font-black uppercase text-indigo-400 tracking-[0.3em] mb-2">Meeting Code</p>
                          <p className="font-mono text-3xl font-black tracking-[0.2em] text-indigo-700">{session.meetingCode}</p>
                        </div>
                        <button 
                          onClick={() => { navigator.clipboard.writeText(session.meetingCode); alert('Credential Copied!'); }}
                          className="relative z-10 px-6 py-3 rounded-2xl bg-white text-indigo-600 font-black text-[10px] uppercase tracking-widest shadow-sm hover:shadow-lg transition-all"
                         >
-                         Copy Signal
+                         Copy Code
                        </button>
                     </div>
                   )}
@@ -177,11 +177,11 @@ const Schedule = () => {
                          onClick={() => window.location.assign(`/video/${session.meetingCode}`)}
                          className="btn-serene-primary !py-5 shadow-2xl shadow-indigo-100 flex items-center justify-center gap-3 text-lg"
                       >
-                        <span>📹</span> Join Interview
+                         <span>📹</span> Join Session
                       </button>
                     ) : user?.role === 'counselor' && session.status === 'pending' ? (
                       <div className="flex flex-col gap-3">
-                        <button onClick={() => handleUpdateStatus(session._id, 'approved')} className="w-full py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black uppercase tracking-widest text-[10px] shadow-xl shadow-emerald-100 hover:bg-emerald-500 transition-all">Grant Access</button>
+                        <button onClick={() => handleUpdateStatus(session._id, 'approved')} className="w-full py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black uppercase tracking-widest text-[10px] shadow-xl shadow-emerald-100 hover:bg-emerald-500 transition-all">Approve</button>
                         <button onClick={() => handleUpdateStatus(session._id, 'rejected')} className="w-full py-4 bg-slate-100 text-slate-400 rounded-[1.5rem] font-black uppercase tracking-widest text-[10px] hover:text-rose-500 transition-all">Decline</button>
                       </div>
                     ) : (
@@ -204,7 +204,7 @@ const Schedule = () => {
         
         {/* Helper Footer */}
         <p className="text-center mt-20 text-[10px] font-black uppercase tracking-[0.4em] text-slate-200">
-           Unified Clinical Timeline • MindSpace System Core
+           Your Wellness Timeline • MindSpace Hub
         </p>
       </div>
     </div>

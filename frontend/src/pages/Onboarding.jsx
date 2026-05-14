@@ -69,26 +69,26 @@ export default function Onboarding() {
            </div>
            
            <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tighter leading-none mb-6">
-             The journey <br />
-             <span className="italic font-normal">begins here.</span>
+             Welcome to <br />
+             <span className="italic font-normal">MindSpace.</span>
            </h1>
            <p className="text-slate-500 font-medium text-xl leading-relaxed mb-12 max-w-sm mx-auto">
-             Let's synchronize your experience. We'll ask a few foundational questions to tailor your clinical support hub.
+             Let's set up your profile. We'll ask a few quick questions to personalize your experience and show you the best resources.
            </p>
            
            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <div className="px-6 py-3 bg-slate-50 border border-slate-100 rounded-2xl flex items-center gap-3">
                  <span className="text-indigo-600 font-black">15</span>
-                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Queries</span>
+                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Questions</span>
               </div>
               <div className="px-6 py-3 bg-slate-50 border border-slate-100 rounded-2xl flex items-center gap-3">
                  <span className="text-indigo-600 font-black">~3m</span>
-                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Duration</span>
+                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Time</span>
               </div>
            </div>
 
            <button onClick={() => setStep('quiz')} className="btn-serene-primary w-full !py-6 shadow-2xl shadow-indigo-100 text-lg">
-             Calibrate Experience
+             Get Started
            </button>
         </div>
       </div>
@@ -101,7 +101,7 @@ export default function Onboarding() {
       <div className="min-h-screen bg-[#fcfdfe] flex items-center justify-center p-6 text-center">
         <div className="text-center">
             <div className="w-12 h-12 border-4 border-indigo-50 border-t-indigo-600 rounded-full animate-spin mx-auto mb-6" />
-            <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Personalizing Clinical Environment...</p>
+            <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Setting up your space...</p>
         </div>
       </div>
     );
@@ -118,24 +118,24 @@ export default function Onboarding() {
              ✨
            </div>
            
-           <h1 className="text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Protocol Active.</h1>
-           <p className="text-slate-500 font-medium text-lg mb-12">Your baseline is securely saved in the system ledger.</p>
+           <h1 className="text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">All set!</h1>
+           <p className="text-slate-500 font-medium text-lg mb-12">Your profile is ready and your first check-in is saved.</p>
 
            {result && (
              <div className="grid grid-cols-2 gap-4 mb-12">
                 <div className="bg-white/60 p-8 rounded-[2.5rem] border border-white shadow-xl">
                    <p className="text-4xl font-black text-indigo-600 leading-none mb-1">{result.phq9Score ?? 0}</p>
-                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Mood Core</p>
+                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Mood Score</p>
                 </div>
                 <div className="bg-white/60 p-8 rounded-[2.5rem] border border-white shadow-xl">
                    <p className="text-4xl font-black text-rose-500 leading-none mb-1">{result.gad7Score ?? 0}</p>
-                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Intensity Arc</p>
+                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Anxiety Score</p>
                 </div>
              </div>
            )}
 
            <button onClick={() => navigate('/dashboard')} className="btn-serene-primary w-full !py-5">
-             Enter Dashboard
+             Go to Dashboard
            </button>
         </div>
       </div>
@@ -194,7 +194,7 @@ export default function Onboarding() {
               : 'bg-indigo-600 text-white shadow-indigo-100 hover:bg-indigo-500 hover:-translate-y-1'
             }`}
         >
-          {currentIndex + 1 === total ? 'Finalize Protocol' : 'Continue →'}
+          {currentIndex + 1 === total ? 'Finish' : 'Continue →'}
         </button>
       </div>
     </div>

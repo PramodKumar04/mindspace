@@ -20,6 +20,8 @@ import AdminPanel from './pages/AdminPanel';
 import ManageResources from './components/ManageResources';
 import VideoMeetComponent from './pages/VideoMeet';
 import JoinLobby from './pages/JoinLobby';
+import GroupsExplore from './pages/GroupsExplore';
+import GroupDetails from './pages/GroupDetails';
 
 export default function App() {
   return (
@@ -119,6 +121,22 @@ export default function App() {
               element={
                 <ProtectedRoute allowedRoles={['student']}>
                   <Community />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/groups"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <GroupsExplore />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/groups/:id"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <GroupDetails />
                 </ProtectedRoute>
               }
             />

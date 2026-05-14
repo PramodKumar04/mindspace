@@ -34,13 +34,13 @@ const Icons = {
 };
 
 const STUDENT_CARDS = [
-  { to: '/check-in', Icon: Icons.CheckIn, title: 'Pulse Check', desc: 'Quick assessment of your mood and stress.', theme: 'bg-rose-50 text-rose-600' },
-  { to: '/resources', Icon: Icons.Resources, title: 'Resource Library', desc: 'Guided wisdom tailored to your results.', theme: 'bg-blue-50 text-blue-600' },
-  { to: '/community', Icon: Icons.Community, title: 'Forum', desc: 'Heal together in our peer community.', theme: 'bg-teal-50 text-teal-600' },
-  { to: '/chatbot', Icon: Icons.Chat, title: 'AI Guide', desc: 'Instant support from our empathetic AI.', theme: 'bg-indigo-50 text-indigo-600' },
-  { to: '/schedule', Icon: Icons.Bookings, title: 'My Schedule', desc: 'Your upcoming therapy appointments.', theme: 'bg-amber-50 text-amber-600' },
-  { to: '/connect', Icon: Icons.Video, title: 'Connect', desc: 'Professional clinical interventions.', theme: 'bg-purple-50 text-purple-600' },
-  { to: '/progress', Icon: Icons.Progress, title: 'Insights', desc: 'Data-driven look at your journey.', theme: 'bg-slate-50 text-slate-600' },
+  { to: '/check-in', Icon: Icons.CheckIn, title: 'Mood Check-In', desc: 'A quick way to track your mood and stress.', theme: 'bg-rose-50 text-rose-600' },
+  { to: '/resources', Icon: Icons.Resources, title: 'Resources', desc: 'Articles and guides tailored for you.', theme: 'bg-blue-50 text-blue-600' },
+  { to: '/groups', Icon: Icons.Community, title: 'Community', desc: 'Join groups and connect with others.', theme: 'bg-teal-50 text-teal-600' },
+  { to: '/chatbot', Icon: Icons.Chat, title: 'Assistant', desc: 'Chat with our supportive AI guide.', theme: 'bg-indigo-50 text-indigo-600' },
+  { to: '/schedule', Icon: Icons.Bookings, title: 'Schedule', desc: 'Your upcoming sessions and history.', theme: 'bg-amber-50 text-amber-600' },
+  { to: '/connect', Icon: Icons.Video, title: 'Counseling', desc: 'Book a session with our counselors.', theme: 'bg-purple-50 text-purple-600' },
+  { to: '/progress', Icon: Icons.Progress, title: 'My Journey', desc: 'Track your wellness progress over time.', theme: 'bg-slate-50 text-slate-600' },
 ];
 
 export default function Dashboard() {
@@ -72,7 +72,7 @@ export default function Dashboard() {
             </div>
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-2">
-                Welcome back to MindSpace
+                Welcome back
               </p>
               <h1 className="text-5xl font-black text-slate-900 tracking-tight leading-none">
                 {greeting()}, <br />
@@ -81,8 +81,8 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="hidden lg:block text-right">
-            <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-2">Campus Context</p>
-            <p className="text-slate-900 font-black text-xl">{user?.college?.name || 'Central Health Hub'}</p>
+            <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-2">College</p>
+            <p className="text-slate-900 font-black text-xl">{user?.college?.name || 'My Campus'}</p>
           </div>
         </div>
 
@@ -97,15 +97,15 @@ export default function Dashboard() {
                   <Icons.Brain />
                 </div>
                 <div className="flex-1 text-center sm:text-left">
-                  <h3 className="text-xl font-black text-slate-900">Check-in recommended</h3>
+                  <h3 className="text-xl font-black text-slate-900">Time for a check-in?</h3>
                   <p className="text-slate-500 font-medium">
                     {daysSinceCheck === null
-                      ? "Welcome! Let's start with your first emotional baseline screening."
-                      : `It has been ${daysSinceCheck} days since your last pulse check recorded.`}
+                      ? "Welcome! Let's start with your first wellness check-in."
+                      : `It has been ${daysSinceCheck} days since your last check-in.`}
                   </p>
                 </div>
                 <Link to="/check-in" className="btn-serene-primary">
-                  Begin Baseline
+                  Start Check-In
                 </Link>
               </div>
             )}
@@ -114,15 +114,15 @@ export default function Dashboard() {
             {!loadingRes && results.length > 0 && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="glass-card flex flex-col items-center justify-center text-center p-6 bg-white/60">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Total Activity</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Check-Ins</p>
                   <p className="text-4xl font-black text-slate-900">{results.length}</p>
                 </div>
                 <div className="glass-card flex flex-col items-center justify-center text-center p-6 bg-white/60">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Completion Rate</p>
-                  <p className="text-4xl font-black text-slate-900">100%</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Progress</p>
+                  <p className="text-4xl font-black text-slate-900">Active</p>
                 </div>
                 <div className="glass-card flex flex-col items-center justify-center text-center p-6 bg-white/60">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Mood Index</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Mood Status</p>
                   <p className="text-4xl font-black text-indigo-600">Stable</p>
                 </div>
                 <div className="glass-card flex flex-col items-center justify-center text-center p-6 bg-white/60">
@@ -162,10 +162,10 @@ export default function Dashboard() {
               </div>
               <h2 className="text-3xl font-black mb-2">My Schedule</h2>
               <p className="text-indigo-100 font-medium text-sm mb-12">
-                Unified clinical calendar for approving student appointments and managing time.
+                Manage your session requests and upcoming appointments.
               </p>
               <Link to="/schedule" className="btn-serene-secondary w-full text-center block !bg-white !text-indigo-600 shadow-xl shadow-indigo-900/20">
-                Manage Schedule
+                View Schedule
               </Link>
             </div>
 
@@ -173,12 +173,12 @@ export default function Dashboard() {
               <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-8">
                 <Icons.Video />
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-2">Telehealth</h2>
+              <h2 className="text-3xl font-black text-slate-900 mb-2">Video Calls</h2>
               <p className="text-slate-500 font-medium text-sm mb-12">
-                Secure, end-to-end encrypted video intervention rooms for private sessions.
+                Start or join a private video call for your sessions.
               </p>
               <Link to="/video/join" className="btn-serene-primary w-full text-center block">
-                Enter Lobby
+                Join Call
               </Link>
             </div>
 
@@ -186,12 +186,12 @@ export default function Dashboard() {
               <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-8">
                 <Icons.Resources />
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-2">Resource Library</h2>
+              <h2 className="text-3xl font-black text-slate-900 mb-2">Manage Resources</h2>
               <p className="text-slate-500 font-medium text-sm mb-12">
-                System content management: Upload assessments, articles, and guided exercises.
+                Create and manage articles, guides, and wellness exercises.
               </p>
               <Link to="/manage-resources" className="btn-serene-primary w-full text-center block">
-                Publish Resources
+                Go to Library
               </Link>
             </div>
           </div>
@@ -204,12 +204,12 @@ export default function Dashboard() {
               <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white mb-8">
                 <Icons.Gear />
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-2">System Admin</h2>
+              <h2 className="text-3xl font-black text-slate-900 mb-2">Admin Dashboard</h2>
               <p className="text-slate-500 font-medium text-sm mb-12">
-                Full control over users, college nodes, and system-wide flagged content.
+                Manage users, college details, and community reports.
               </p>
               <Link to="/admin" className="btn-serene-primary w-full text-center block">
-                Open Engine
+                Open Admin
               </Link>
             </div>
           </div>

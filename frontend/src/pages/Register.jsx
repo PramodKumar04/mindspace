@@ -23,12 +23,12 @@ const Register = () => {
     setError('');
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Password synchronization failure.');
+      setError('Passwords don\'t match.');
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Security key must be at least 6 parameters.');
+      setError('Password must be at least 6 characters.');
       return;
     }
 
@@ -42,7 +42,7 @@ const Register = () => {
       else if (role === 'student' && !hasCompletedOnboarding) navigate('/onboarding');
       else navigate('/dashboard');
     } else {
-      setError(result.message || 'Registration sequence interrupted.');
+      setError(result.message || 'We couldn\'t create your account. Please try again.');
     }
 
     setLoading(false);
@@ -67,7 +67,7 @@ const Register = () => {
             <span className="text-white">🌱</span>
           </div>
           <h1 className="text-5xl font-black text-slate-900 tracking-tighter mb-1">MindSpace</h1>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">New Member Registration</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">Join Us</p>
         </div>
 
         {/* Auth Panel */}
@@ -83,13 +83,13 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className={labelCls}>Full Identity</label>
+                <label htmlFor="name" className={labelCls}>Full Name</label>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   required
-                  placeholder="Clinical Name"
+                  placeholder="Enter your name"
                   value={formData.name}
                   onChange={handleChange}
                   className={inputCls}
@@ -97,7 +97,7 @@ const Register = () => {
               </div>
 
               <div>
-                <label htmlFor="email" className={labelCls}>Email Node</label>
+                <label htmlFor="email" className={labelCls}>Email Address</label>
                 <input
                   id="email"
                   name="email"
@@ -113,7 +113,7 @@ const Register = () => {
 
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="role" className={labelCls}>Access Level</label>
+                <label htmlFor="role" className={labelCls}>I am a...</label>
                 <select
                   id="role"
                   name="role"
@@ -122,20 +122,20 @@ const Register = () => {
                   onChange={handleChange}
                   className={`${inputCls} appearance-none`}
                 >
-                  <option value="student">Student Member</option>
-                  <option value="counselor">Clinical Partner</option>
+                  <option value="student">Student</option>
+                  <option value="counselor">Counselor</option>
                 </select>
               </div>
 
               <div>
                 <label htmlFor="alias" className={labelCls}>
-                  Alias <span className="text-slate-200 font-normal tracking-normal">(Anonymous Shield)</span>
+                  Nickname <span className="text-slate-200 font-normal tracking-normal">(for staying anonymous)</span>
                 </label>
                 <input
                   id="alias"
                   name="alias"
                   type="text"
-                  placeholder="Community Name"
+                  placeholder="Choose a nickname"
                   value={formData.alias}
                   onChange={handleChange}
                   className={inputCls}
@@ -145,13 +145,13 @@ const Register = () => {
 
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="password" className={labelCls}>Security Key</label>
+                <label htmlFor="password" className={labelCls}>Password</label>
                 <input
                   id="password"
                   name="password"
                   type="password"
                   required
-                  placeholder="Min 6 chars"
+                  placeholder="Min 6 characters"
                   value={formData.password}
                   onChange={handleChange}
                   className={inputCls}
@@ -159,13 +159,13 @@ const Register = () => {
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className={labelCls}>Confirm Key</label>
+                <label htmlFor="confirmPassword" className={labelCls}>Confirm Password</label>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
                   required
-                  placeholder="Sync Verification"
+                  placeholder="Type password again"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={inputCls}
@@ -182,7 +182,7 @@ const Register = () => {
                   : 'bg-indigo-600 text-white shadow-indigo-100 hover:bg-indigo-500 hover:-translate-y-1'
               }`}
             >
-              {loading ? 'Initializing...' : 'Register Account →'}
+              {loading ? 'Creating account...' : 'Create Account →'}
             </button>
           </form>
 
@@ -193,15 +193,15 @@ const Register = () => {
           </div>
 
           <p className="text-center font-black text-[10px] uppercase tracking-widest text-slate-400">
-            Existing credentials?{' '}
+            Already have an account?{' '}
             <Link to="/login" className="text-indigo-600 hover:text-indigo-400 border-b-2 border-indigo-50 transition-all pb-0.5">
-              Enter Hub here
+              Sign in here
             </Link>
           </p>
         </div>
 
         <p className="text-center text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mt-16 leading-relaxed">
-           Confidential Registration Protocol <br /> Personal Data is Locally Orchestrated
+           MindSpace • Your privacy and safety are our priority
         </p>
       </div>
     </div>

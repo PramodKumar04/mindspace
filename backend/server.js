@@ -17,9 +17,10 @@ import adminRoutes from './routes/admin.js';
 import assessmentRoutes from './routes/assessments.js';
 import videoRoutes from './routes/video.js';
 import notificationRoutes from './routes/notification.js';
+import groupRoutes from './routes/groups.js';
 import { connectToSocket } from './services/socketManager.js';
 
-dotenv.config();
+dotenv.config({ override: true });
 
 const app = express();
 
@@ -73,6 +74,7 @@ app.use('/api/assessments', assessmentRoutes); // ← ADD THIS
 app.use('/api/video', videoRoutes);
 app.use('/api/v1/users', videoRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/groups', groupRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -90,7 +92,7 @@ app.use(errorHandler);
 // Database connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mental-health-platform')
   .then(() => {
-    console.log(`✅ MongoDB connected to ${process.env.MONGODB_URI }}`);
+    console.log(`✅ MongoDB connected to ${process.env.MONGODB_URI}`);
     const PORT = process.env.PORT || 5000;
     const server = createServer(app);
     connectToSocket(server);

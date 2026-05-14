@@ -136,4 +136,16 @@ export const assessmentAPI = {
   deleteResult: (id) => api.delete(`/assessments/results/${id}`),
 };
 
+// Groups API
+export const groupsAPI = {
+  getAll: (params) => api.get('/groups', { params }),
+  getById: (id) => api.get(`/groups/${id}`),
+  create: (data) => api.post('/groups', data),
+  join: (id) => api.post(`/groups/${id}/join`),
+  leave: (id) => api.post(`/groups/${id}/leave`),
+  createPost: (groupId, data) => api.post(`/groups/${groupId}/posts`, data),
+  getPosts: (groupId, params) => api.get(`/groups/${groupId}/posts`, { params }),
+  toggleLike: (postId) => api.post(`/groups/posts/${postId}/like`)
+};
+
 export default api;

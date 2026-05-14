@@ -37,12 +37,12 @@ export default function Progress() {
   useEffect(() => {
     assessmentAPI.getMyResults()
       .then(data => setResults(Array.isArray(data) ? data.reverse() : []))
-      .catch(() => setError('The progress data nodes could not be synchronized.'))
+      .catch(() => setError('We couldn\'t load your progress at the moment.'))
       .finally(() => setLoading(false));
   }, []);
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Purge this record from the system timeline?')) return;
+    if (!window.confirm('Delete this check-in permanently?')) return;
     try {
       await assessmentAPI.deleteResult(id);
       setResults(prev => prev.filter(r => r._id !== id));
@@ -56,7 +56,7 @@ export default function Progress() {
       <div className="min-h-screen bg-[#fcfdfe] flex items-center justify-center">
         <div className="text-center">
             <div className="w-12 h-12 border-4 border-indigo-50 border-t-indigo-600 rounded-full animate-spin mx-auto mb-6" />
-            <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Aggregating Personal History...</p>
+            <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px] animate-pulse">Loading your journey...</p>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ export default function Progress() {
       <div className="min-h-screen bg-[#fcfdfe] flex items-center justify-center p-6 text-center">
         <div className="glass-panel !rounded-[3rem] p-12 max-w-md w-full shadow-2xl">
            <div className="text-4xl mb-6">⚠️</div>
-           <h3 className="text-2xl font-black text-slate-900 mb-2">Sync Error</h3>
+           <h3 className="text-2xl font-black text-slate-900 mb-2">Connection Error</h3>
            <p className="text-slate-400 font-medium mb-10">{error}</p>
            <button className="btn-serene-primary w-full" onClick={() => navigate('/dashboard')}>
               Back to Dashboard
@@ -92,14 +92,14 @@ export default function Progress() {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 mb-4 font-sans">Trajectory Analysis</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 mb-4 font-sans">Your Journey</p>
             <h1 className="text-6xl font-black text-slate-900 tracking-tighter leading-none mb-1">
-              Personal <br />
-              <span className="italic font-normal">Evolution.</span>
+              My <br />
+              <span className="italic font-normal">Progress.</span>
             </h1>
           </div>
           <p className="text-slate-500 font-medium text-lg max-w-sm leading-relaxed">
-             Visualize your mental landscape through high-fidelity data nodes and chronological mapping.
+             Track your mood and wellness progress over time with easy-to-read charts.
           </p>
         </div>
 
@@ -109,12 +109,12 @@ export default function Progress() {
              <div className="w-24 h-24 rounded-full bg-slate-50 flex items-center justify-center mx-auto mb-10 text-5xl italic font-serif text-slate-200">
                 🌱
              </div>
-             <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-4">A story waiting to be told.</h2>
+             <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-4">Your journey starts here.</h2>
              <p className="text-slate-400 font-medium mb-12 max-w-xs mx-auto leading-relaxed">
-                Start your first emotional pulse check to begin generating your clinical trajectory.
+                Complete your first check-in to see your wellness progress chart.
              </p>
              <Link to="/check-in" className="btn-serene-primary inline-block">
-                Initiate Baseline Check-In
+                Start First Check-In
              </Link>
           </div>
         ) : (
@@ -123,10 +123,10 @@ export default function Progress() {
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { label: 'Check-In Units', value: flowResults.length, color: 'text-indigo-600' },
+                { label: 'Check-Ins', value: flowResults.length, color: 'text-indigo-600' },
                 { label: 'Latest Mood', value: flowResults[flowResults.length - 1]?.phq9Score ?? '—', color: 'text-rose-500' },
-                { label: 'Latest Stress', value: flowResults[flowResults.length - 1]?.gad7Score ?? '—', color: 'text-amber-500' },
-                { label: 'Vitality Index', value: flowResults[flowResults.length - 1]?.pssScore ?? '—', color: 'text-emerald-500' },
+                { label: 'Latest Anxiety', value: flowResults[flowResults.length - 1]?.gad7Score ?? '—', color: 'text-amber-500' },
+                { label: 'Stress Level', value: flowResults[flowResults.length - 1]?.pssScore ?? '—', color: 'text-emerald-500' },
               ].map(stat => (
                 <div key={stat.label} className="glass-card flex flex-col items-center justify-center text-center p-8 bg-white shadow-sm ring-offset-2 hover:ring-8 ring-indigo-50/50">
                   <p className={`text-4xl font-black leading-none mb-2 ${stat.color}`}>
@@ -141,8 +141,8 @@ export default function Progress() {
             <div className="glass-panel !rounded-[3rem] p-10 lg:p-16 shadow-2xl border-none">
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-6">
                  <div>
-                    <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Mood Spectrum</h3>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Cross-Reference: PHQ-9 & GAD-7 Intensity</p>
+                    <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Mood Trends</h3>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Summary of Mood & Anxiety</p>
                  </div>
                  <div className="flex gap-6">
                     <div className="flex items-center gap-2">
@@ -211,12 +211,12 @@ export default function Progress() {
             <div className="glass-panel !rounded-[3rem] p-10 lg:p-16 shadow-2xl border-none">
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-6">
                  <div>
-                    <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Stress Vitality</h3>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Stress Levels Correlation (PSS)</p>
+                    <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Stress History</h3>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Your Stress Levels Over Time</p>
                  </div>
                  <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-amber-400 shadow-xl shadow-amber-200" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Environmental Score</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Stress Score</span>
                  </div>
               </div>
 
@@ -264,7 +264,7 @@ export default function Progress() {
         {results.length > 0 && (
           <div className="mt-24 space-y-6">
             <div className="flex items-center gap-4 mb-8">
-               <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">Chronological Archive</h3>
+               <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">Check-In History</h3>
                <div className="flex-1 h-px bg-slate-100" />
             </div>
             
@@ -277,16 +277,16 @@ export default function Progress() {
                      </div>
                      <div>
                        <h4 className="font-black text-slate-900 tracking-tight leading-none mb-1">
-                         {r.questionnaireType === 'wellbeing-flow' ? 'Wellbeing Pulse' : r.questionnaireType.toUpperCase()}
+                         {r.questionnaireType === 'wellbeing-flow' ? 'Wellness Check-In' : r.questionnaireType.toUpperCase()}
                        </h4>
-                       <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none">Record finalized on {formatDate(r.createdAt)}</p>
+                       <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none">Completed on {formatDate(r.createdAt)}</p>
                      </div>
                    </div>
                    
                    <div className="flex items-center gap-12">
                       <div className="text-center">
                          <p className="text-2xl font-black text-slate-900 leading-none mb-1">{r.totalScore}</p>
-                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Score Index</p>
+                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Score</p>
                       </div>
                       {r.severityTag && (
                         <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm border ${
@@ -310,10 +310,10 @@ export default function Progress() {
 
         <div className="mt-24 pt-12 border-t border-slate-100 flex flex-col items-center">
            <Link to="/check-in" className="btn-serene-primary !px-12 !py-5 bg-slate-900 hover:bg-black shadow-2xl shadow-indigo-200">
-             Register New Event Node
+             New Check-In
            </Link>
            <p className="mt-12 text-[10px] font-black uppercase tracking-[0.4em] text-slate-200">
-              MindSpace • Path Tracking Protocol v4.0
+              MindSpace • Your Wellness Journey
            </p>
         </div>
       </div>
