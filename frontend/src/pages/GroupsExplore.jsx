@@ -119,23 +119,23 @@ const GroupsExplore = () => {
         {/* Create Modal */}
         {showCreateModal && (
           <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-2xl flex items-center justify-center z-50 p-6 animate-in fade-in duration-500">
-            <div className="glass-panel !rounded-[4rem] p-12 lg:p-20 max-w-3xl w-full shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-500">
+            <div className="glass-panel !rounded-[2rem] p-8 lg:p-10 max-w-xl w-full shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-500">
               <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-30 -mr-32 -mt-32" />
               
-              <div className="flex justify-between items-start mb-12">
+              <div className="flex justify-between items-start mb-8">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400 mb-2">Start a new group</p>
-                  <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-none">Create.</h2>
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter leading-none">Create.</h2>
                 </div>
-                <button onClick={() => setShowCreateModal(false)} className="w-12 h-12 rounded-full border border-slate-100 flex items-center justify-center text-slate-300 hover:text-rose-500 transition-colors">✕</button>
+                <button onClick={() => setShowCreateModal(false)} className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-300 hover:text-rose-500 transition-colors">✕</button>
               </div>
 
-              <form onSubmit={handleCreateGroup} className="space-y-10">
+              <form onSubmit={handleCreateGroup} className="space-y-6">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-4">Group Name</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Group Name</label>
                   <input
                     type="text"
-                    className="w-full px-8 py-6 bg-slate-50 border-none rounded-[2rem] focus:ring-8 ring-indigo-50 transition-all outline-none font-black text-2xl tracking-tighter text-slate-900 placeholder:text-slate-200"
+                    className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-4 ring-indigo-50 transition-all outline-none font-bold text-lg tracking-tight text-slate-900 placeholder:text-slate-200"
                     placeholder="Enter group name..."
                     value={newGroup.name}
                     onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
@@ -143,11 +143,11 @@ const GroupsExplore = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-4">Category</label>
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Category</label>
                     <select
-                      className="w-full px-8 py-6 bg-slate-50 border-none rounded-[2rem] focus:ring-8 ring-indigo-50 transition-all outline-none font-bold text-slate-700"
+                      className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-4 ring-indigo-50 transition-all outline-none font-bold text-slate-700"
                       value={newGroup.category}
                       onChange={(e) => setNewGroup({ ...newGroup, category: e.target.value })}
                     >
@@ -157,10 +157,10 @@ const GroupsExplore = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-4">Description</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Description</label>
                   <textarea
-                    className="w-full px-8 py-6 bg-slate-50 border-none rounded-[2.5rem] focus:ring-8 ring-indigo-50 transition-all outline-none font-medium text-lg leading-relaxed text-slate-700 placeholder:text-slate-200 resize-none"
-                    rows={4}
+                    className="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-4 ring-indigo-50 transition-all outline-none font-medium text-base leading-relaxed text-slate-700 placeholder:text-slate-200 resize-none"
+                    rows={3}
                     placeholder="Describe the purpose of this group..."
                     value={newGroup.description}
                     onChange={(e) => setNewGroup({ ...newGroup, description: e.target.value })}
@@ -171,7 +171,7 @@ const GroupsExplore = () => {
                 <button
                   type="submit"
                   disabled={creating}
-                  className="w-full py-6 bg-indigo-600 text-white rounded-[2.5rem] font-black text-xs uppercase tracking-[0.4em] shadow-2xl shadow-indigo-100 hover:bg-indigo-500 hover:-translate-y-1 transition-all"
+                  className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.4em] shadow-xl shadow-indigo-100 hover:bg-indigo-500 hover:-translate-y-1 transition-all"
                 >
                   {creating ? 'Creating...' : 'Create Group →'}
                 </button>
