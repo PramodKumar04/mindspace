@@ -42,17 +42,14 @@ export default function Navbar() {
                 <Link to="/dashboard" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
                   Dashboard
                 </Link>
-                <Link to="/groups" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Groups
-                </Link>
                 <Link to="/schedule" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Schedule
+                  My Schedule
                 </Link>
                 <Link to="/connect" className="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all">
-                  Counseling
+                  Connect
                 </Link>
-                <Link to="/chatbot" className="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-100 font-black tracking-wide">
-                  Chat Assistant ✨
+                <Link to="/chatbot" className="px-4 py-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-100 font-black tracking-wide">
+                  AI Support ✨
                 </Link>
               </>
             )}
